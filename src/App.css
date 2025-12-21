@@ -360,9 +360,7 @@ body::before {
   transition: all 0.3s ease;
 }
 
-.icon-card:hover .icon-svg {
-  color: #E67E50;
-}
+/* Removed hover color change per user request */
 
 .icon-svg svg {
   width: 100%;
@@ -383,7 +381,6 @@ body::before {
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   font-weight: 500;
-  transition: color 0.3s ease;
 }
 
 .icon-card:hover .icon-name {
