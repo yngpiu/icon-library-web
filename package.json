@@ -16,6 +16,9 @@
   ],
   "author": "Your Name <your-email@example.com>",
   "license": "MIT",
+  "pnpm": {
+    "onlyBuiltDependencies": ["@swc/core", "esbuild"]
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/yourusername/mixxicon.git"
