@@ -1,0 +1,71 @@
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Dependencies
+node_modules
+
+# Production builds
+dist
+dist-ssr
+build
+
+# Environment variables
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+*.local
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+*.swp
+*.swo
+*~
+
+# OS generated files
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Coverage and testing
+coverage/
+*.lcov
+.nyc_output
+
+# Cache directories
+.eslintcache
+*.tsbuildinfo
+.npm
+.cache
+.parcel-cache
+
+# Optional files
+.node_repl_history
+*.tgz
+.yarn-integrity
+
+# Temporary folders
+tmp/
+temp/
+
+# Generated icon data (uncomment if you don't want to commit generated files)
+# public/icons/
+# src/data/
