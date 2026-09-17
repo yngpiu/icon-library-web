@@ -24,6 +24,7 @@ interface Icon {
 }
 
 // Constants
+const BASE_URL = import.meta.env.BASE_URL;
 const ICONS_PER_ROW = 9;
 const ROW_HEIGHT = 120;
 const FUSE_OPTIONS = {
@@ -109,7 +110,7 @@ function App() {
 
   // Load manifest
   useEffect(() => {
-    fetch('/icons/manifest.json')
+    fetch(`${BASE_URL}icons/manifest.json`)
       .then(r => r.json())
       .then(data => {
         setCollections(data.collections);
@@ -172,7 +173,7 @@ function App() {
 
     const load = async () => {
       // Step 1: fetch metadata (no content) — fast
-      const metaRes = await fetch(`/icons/${collection}.json`);
+      const metaRes = await fetch(`${BASE_URL}icons/${collection}.json`);
       const meta: Icon[] = await metaRes.json();
       if (cancelled) return;
 
@@ -201,7 +202,7 @@ function App() {
         cache.set(collection, fullIcons);
         setIcons(fullIcons);
       } else {
-        const idxRes = await fetch(`/icons/${collection}.content.idx.json`);
+        const idxRes = await fetch(`${BASE_URL}icons/${collection}.content.idx.json`);
         const idx = await idxRes.json();
         if (cancelled) return;
         const partial: (string | null)[] = new Array(idx.size).fill(null);
@@ -215,7 +216,7 @@ function App() {
         const loadChunk = async (i: number) => {
           if (chunkLoadedRef.current.has(i)) return;
           chunkLoadedRef.current.add(i);
-          const chunkRes = await fetch(`/icons/${collection}.content.${i}.json`);
+          const chunkRes = await fetch(`${BASE_URL}icons/${collection}.content.${i}.json`);
           const chunk: string[] = await chunkRes.json();
           if (cancelled) return;
           for (let j = 0; j < chunk.length; j++) {
@@ -307,7 +308,7 @@ function App() {
     if (!el) return;
     const loadingChunks = new Set<number>();
     const loadChunk = async (i: number, col: string) => {
-      const res = await fetch(`/icons/${col}.content.${i}.json`);
+      const res = await fetch(`${BASE_URL}icons/${col}.content.${i}.json`);
       const chunk: string[] = await res.json();
       const partial = chunkPartialRef.current;
       const meta = chunkMetaRef.current;
@@ -413,18 +414,18 @@ function App() {
   const preloadCollection = useCallback(async (name: string) => {
     if (cache.has(name) || !name) return;
     try {
-      const metaRes = await fetch(`/icons/${name}.json`);
+      const metaRes = await fetch(`${BASE_URL}icons/${name}.json`);
       const meta: Icon[] = await metaRes.json();
       const iconsNoContent = meta.map(i => ({ ...i, content: '' }));
       cache.set(name, iconsNoContent);
 
-      const idxRes = await fetch(`/icons/${name}.content.idx.json`);
+      const idxRes = await fetch(`${BASE_URL}icons/${name}.content.idx.json`);
       const idx = await idxRes.json();
       if (meta.length !== idx.size) return;
       const partial: (string | null)[] = new Array(idx.size).fill(null);
       contentCache.set(name, partial);
       for (let i = 0; i < idx.count; i++) {
-        const chunkRes = await fetch(`/icons/${name}.content.${i}.json`);
+        const chunkRes = await fetch(`${BASE_URL}icons/${name}.content.${i}.json`);
         const chunk: string[] = await chunkRes.json();
         for (let j = 0; j < chunk.length; j++) {
           partial[i * 1000 + j] = chunk[j];
